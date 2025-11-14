@@ -47,5 +47,5 @@ export default function TodoInput({getTodos}) {
                   caption="추가"
                   onHandle={handleAdd} />
     </div>
-  )
+  )  
 } 
