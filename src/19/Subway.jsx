@@ -35,6 +35,7 @@ export default function Subway() {
     console.log(tdata)
   } , [tdata]);
   return ( 
+    
     <div className="w-9/10 flex flex-col justify-start mt-10">
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
         <h1 className="w-full p-5 text-2xl font-bold text-center">
