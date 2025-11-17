@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabase/client';
-
+import { useAtom} from 'jotai';
+import { isLoginAtom } from './atoms/atoms'; 
 function Login() {
   // session 상태를 저장하는 state
   const [session, setSession] = useState(null);
   // user 정보를 저장하는 state
   const [user, setUser] = useState(null);
 
+  //로그인 상태 atom 저장
+  const [isLogin, setIsLogin] = useAtom(isLoginAtom) ;
+  console.log("Login" ,isLogin)
+
+
   // 컴포넌트가 마운트될 때 한 번 실행되는 useEffect
   useEffect(() => {
     // 현재 세션 정보를 가져와서 session state를 업데이트
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+      setSession(session); 
       // 세션이 있으면 user 정보를, 없으면 null을 user state에 저장
       setUser(session?.user || null);
     });
@@ -30,6 +36,11 @@ function Login() {
     return () => subscription.unsubscribe();
   }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 함
 
+
+  useEffect(() => {
+    if (session) setIsLogin(true) ;
+  } , [session]);
+
   // GitHub OAuth를 사용하여 로그인하는 비동기 함수
   const signInWithGithub = async () => {
     await supabase.auth.signInWithOAuth({
@@ -40,6 +51,7 @@ function Login() {
   // 로그아웃하는 비동기 함수
   const signOut = async () => {
     await supabase.auth.signOut();
+    setIsLogin(false) ;
   };
 
   // 세션이 없는 경우 (로그인되지 않은 상태)
