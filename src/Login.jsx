@@ -12,6 +12,9 @@ function Login() {
   const [isLogin, setIsLogin] = useAtom(isLoginAtom) ;
   console.log("Login" ,isLogin)
 
+//  const redirectURL = process.env.NODE_ENV === 'production'
+//    ? 'https://kdt03-react-zeta.vercel.app/' // 배포 환경의 리디렉션 URL
+//    : 'http://localhost:5173/'; // 개발 환경의 리디렉션 URL
 
   // 컴포넌트가 마운트될 때 한 번 실행되는 useEffect
   useEffect(() => {
